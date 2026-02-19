@@ -1,0 +1,56 @@
+{
+  "$schema": "./golden-hashes.schema.json",
+  "version": "1.0",
+  "mcp_name": "Japan Law MCP",
+  "jurisdiction": "JP",
+  "provisions": [
+    {
+      "id": "jp-hash-001",
+      "description": "Constitution of Japan Article 13 \u2014 right to life, liberty, and the pursuit of happiness; constitutional basis for the right to privacy in Japanese law",
+      "upstream_url": "https://laws.e-gov.go.jp/law/321CONSTITUTION",
+      "selector_hint": "第十三条",
+      "expected_sha256": "COMPUTE_ON_FIRST_INGEST",
+      "expected_snippet": "すべて国民は、個人として尊重される"
+    },
+    {
+      "id": "jp-hash-002",
+      "description": "Act on Protection of Personal Information (APPI) Article 1 \u2014 purpose clause; Act No. 57 of 2003, substantially amended 2020 (effective 2022)",
+      "upstream_url": "https://laws.e-gov.go.jp/law/415AC0000000057",
+      "selector_hint": "第一条",
+      "expected_sha256": "COMPUTE_ON_FIRST_INGEST",
+      "expected_snippet": "個人情報の適正かつ効果的な活用"
+    },
+    {
+      "id": "jp-hash-003",
+      "description": "Cybersecurity Basic Act Article 1 \u2014 purpose clause; Act No. 104 of 2014",
+      "upstream_url": "https://laws.e-gov.go.jp/law/426AC1000000104",
+      "selector_hint": "第一条",
+      "expected_sha256": "COMPUTE_ON_FIRST_INGEST",
+      "expected_snippet": "サイバーセキュリティに関する施策"
+    },
+    {
+      "id": "jp-hash-004",
+      "description": "Companies Act Article 1 \u2014 purpose and scope; Act No. 86 of 2005",
+      "upstream_url": "https://laws.e-gov.go.jp/law/417AC0000000086",
+      "selector_hint": "第一条",
+      "expected_sha256": "COMPUTE_ON_FIRST_INGEST",
+      "expected_snippet": "会社の設立"
+    },
+    {
+      "id": "jp-hash-005",
+      "description": "Telecommunications Business Act Article 1 \u2014 purpose clause; Act No. 86 of 1984",
+      "upstream_url": "https://laws.e-gov.go.jp/law/359AC0000000086",
+      "selector_hint": "第一条",
+      "expected_sha256": "COMPUTE_ON_FIRST_INGEST",
+      "expected_snippet": "電気通信事業"
+    },
+    {
+      "id": "jp-hash-006",
+      "description": "Act on Prohibition of Unauthorized Computer Access Article 1 \u2014 purpose clause; Act No. 128 of 1999",
+      "upstream_url": "https://laws.e-gov.go.jp/law/411AC0000000128",
+      "selector_hint": "第一条",
+      "expected_sha256": "COMPUTE_ON_FIRST_INGEST",
+      "expected_snippet": "不正アクセス行為"
+    }
+  ]
+}

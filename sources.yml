@@ -1,0 +1,82 @@
+# sources.yml
+schema_version: "1.0"
+mcp_name: "Japan Law MCP"
+jurisdiction: "JP"
+
+sources:
+  - name: "e-Gov Law Portal (e-Gov法令検索)"
+    authority: "Digital Agency (デジタル庁), Government of Japan"
+    official_portal: "https://laws.e-gov.go.jp"
+    canonical_identifier: "N/A (laws identified by law number and year, e.g., '平成15年法律第57号' / Act No. 57 of 2003)"
+    retrieval_method: "API"
+    api_documentation: "https://laws.e-gov.go.jp/apitop/"
+    update_frequency: "on_change"
+    last_ingested: "PENDING_FIRST_INGEST"
+    license_or_terms:
+      type: "Government Open Data (Japan Open Data)"
+      url: "https://www.digital.go.jp/policies/open_data"
+      summary: "Japanese government legislation is publicly available under the government open data policy; free to use with attribution"
+    coverage:
+      scope: "All Japanese statutes (法律), cabinet orders (政令), ministerial ordinances (省令), and rules promulgated by government agencies; includes the Act on Protection of Personal Information (APPI), Cybersecurity Basic Act, Telecommunications Business Act, Companies Act, Act on Prohibition of Unauthorized Computer Access, and My Number Act"
+      limitations: "Does not include court decisions, legal commentary, or municipal ordinances; historical versions may have limited availability for pre-digital enactments"
+    languages:
+      - "ja"
+
+  - name: "Japanese Law Translation (JLT)"
+    authority: "Ministry of Justice (法務省), Government of Japan"
+    official_portal: "https://www.japaneselawtranslation.go.jp"
+    canonical_identifier: "N/A"
+    retrieval_method: "HTML_SCRAPE"
+    api_documentation: "N/A (searchable web portal; no public API)"
+    update_frequency: "on_change"
+    last_ingested: "PENDING_FIRST_INGEST"
+    license_or_terms:
+      type: "Government Open Data (Reference Translations)"
+      url: "https://www.japaneselawtranslation.go.jp/en/help"
+      summary: "Official English translations published by the Ministry of Justice; marked as reference translations and not legally binding; the Japanese text is the sole authoritative version"
+    coverage:
+      scope: "Official English translations of major Japanese laws including APPI, Companies Act, Cybersecurity Basic Act, Telecommunications Business Act, and criminal statutes; over 800 laws translated"
+      limitations: "Not all laws have English translations; translations may lag behind Japanese text amendments; marked as provisional translations that may be revised"
+    languages:
+      - "en"
+      - "ja"
+
+  - name: "Personal Information Protection Commission (PPC / 個人情報保護委員会)"
+    authority: "Personal Information Protection Commission, Government of Japan"
+    official_portal: "https://www.ppc.go.jp"
+    canonical_identifier: "N/A"
+    retrieval_method: "HTML_SCRAPE"
+    api_documentation: "N/A"
+    update_frequency: "on_change"
+    last_ingested: "PENDING_FIRST_INGEST"
+    license_or_terms:
+      type: "Government Public Data"
+      url: "https://www.ppc.go.jp"
+      summary: "PPC guidelines, enforcement actions, and policy documents are publicly available"
+    coverage:
+      scope: "APPI guidelines, Q&A documents, enforcement actions, cross-border transfer rules, EU adequacy decision documentation, and PPC annual reports"
+      limitations: "Guidelines are supplementary to APPI and may be updated independently; enforcement actions may be partially redacted"
+    languages:
+      - "ja"
+      - "en"
+
+data_freshness:
+  automated_checks: true
+  check_frequency: "weekly"
+  last_verified: "PENDING_FIRST_INGEST"
+
+# Notes:
+# - e-Gov (laws.e-gov.go.jp) provides a public API for accessing Japanese legislation
+#   The API documentation is available at https://laws.e-gov.go.jp/apitop/
+#   This is one of the better-structured government law APIs in Asia
+# - Japanese Law Translation (JLT) provides official English translations maintained
+#   by the Ministry of Justice; these are the most authoritative English versions available
+# - Japan has an EU GDPR adequacy decision (January 2019), recognizing APPI as providing
+#   an adequate level of data protection — renewed and strengthened in 2024
+# - APPI was substantially revised in 2020 (effective April 2022) with stricter
+#   cross-border transfer rules, mandatory breach notification, and expanded data subject rights
+# - The PPC is Japan's independent data protection authority, modeled after EU DPAs
+# - The My Number Act governs Japan's national identification number system (similar to Aadhaar)
+# - The Cybersecurity Basic Act (2014) establishes Japan's national cybersecurity framework
+#   and the National Center of Incident Readiness and Strategy for Cybersecurity (NISC)
+# - The Act on Prohibition of Unauthorized Computer Access is Japan's primary anti-hacking law
