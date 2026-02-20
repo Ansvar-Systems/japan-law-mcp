@@ -79,6 +79,18 @@ const xmlParser = new XMLParser({
   },
 });
 
+
+
+/** Extract text from a parsed XML node that may be a string or object with #text */
+function textValue(node: unknown): string {
+  if (node == null) return '';
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return String(node);
+  if (typeof node === 'object' && '#text' in (node as Record<string, unknown>)) {
+    return String((node as Record<string, unknown>)['#text']);
+  }
+  return String(node);
+}
 /**
  * Fetch list of laws from e-Gov API.
  * Category 1 = all current laws (法律).
@@ -126,8 +138,8 @@ export async function fetchLawData(lawId: string): Promise<LawData> {
 
   return {
     lawId,
-    lawNum: applData?.LawNum ?? '',
-    lawName: applData?.LawName ?? lawFullText?.Law?.LawBody?.LawTitle ?? '',
+    lawNum: textValue(applData?.LawNum) || '',
+    lawName: textValue(applData?.LawName) || textValue(lawFullText?.Law?.LawBody?.LawTitle) || '',
     lawBody: lawFullText?.Law?.LawBody ?? lawFullText?.Law ?? lawFullText,
     rawXml: xml,
   };
