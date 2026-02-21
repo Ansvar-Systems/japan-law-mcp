@@ -123,6 +123,74 @@ Once connected, just ask naturally:
 
 ---
 
+## Laws Covered
+
+| Law | Japanese Name | Act Number | Key Topic |
+|-----|--------------|------------|-----------|
+| **Act on Protection of Personal Information (APPI)** | 個人情報の保護に関する法律 | Act No. 57 of 2003 (amended 2020) | Personal data protection (EU adequacy) |
+| **Cybersecurity Basic Act** | サイバーセキュリティ基本法 | Act No. 104 of 2014 | National cybersecurity framework |
+| **Telecommunications Business Act** | 電気通信事業法 | Act No. 86 of 1984 | Telecom regulation, communications secrecy |
+| **Companies Act** | 会社法 | Act No. 86 of 2005 | Corporate governance, shareholder rights |
+| **Act on Prohibition of Unauthorized Computer Access** | 不正アクセス行為の禁止等に関する法律 | Act No. 128 of 1999 | Anti-hacking, unauthorized access |
+| **My Number Act** | 行政手続における特定の個人を識別するための番号の利用等に関する法律 | Act No. 27 of 2013 | National ID number system |
+| **Constitution (selected provisions)** | 日本国憲法 | 1946 | Fundamental rights, Article 13 (privacy basis) |
+
+Additionally includes key PPC guidelines and supplementary materials:
+
+- APPI Guidelines (General Rules, Cross-Border Transfer, etc.)
+- PPC Q&A on APPI interpretation
+- EU-Japan Adequacy Decision supplementary rules
+
+---
+
+## Deployment Tiers
+
+| Tier | Content | Database Size | Platform |
+|------|---------|---------------|----------|
+| **Free** | All major statutes + English translations + EU cross-references | ~100-150 MB | Vercel (bundled) or local |
+| **Professional** | + Cabinet orders + ministerial ordinances + PPC guidelines + full regulatory corpus | ~500 MB-800 MB | Azure Container Apps / Docker / local |
+
+### Deployment Strategy: MEDIUM - Dual Tier, Bundled Free
+
+The free-tier database containing major statutes and English translations is estimated at 100-150 MB, within the Vercel 250 MB bundle limit. The free-tier database is bundled directly with the Vercel deployment. The professional tier with full cabinet orders, ministerial ordinances, and PPC guidelines requires local Docker or Azure Container Apps deployment.
+
+### Capability Detection
+
+Both tiers use the same codebase. At startup, the server detects available SQLite tables and gates tools accordingly:
+
+```
+Free tier:     core_legislation, eu_references, english_translations
+Professional:  core_legislation, eu_references, english_translations, cabinet_orders, ministerial_ordinances, ppc_guidelines
+```
+
+Tools that require professional capabilities return an upgrade message on the free tier.
+
+---
+
+## Database Size Estimates
+
+| Component | Estimated Size | Notes |
+|-----------|---------------|-------|
+| Major statutes (laws / 法律) | ~40-50 MB | ~200 key statutes, full Japanese text |
+| English translations (JLT) | ~30-40 MB | Official MOJ translations of major laws |
+| EU cross-references | ~5-10 MB | APPI-GDPR adequacy mapping tables |
+| FTS5 indexes | ~30-50 MB | Full-text search indexes for Japanese text (ICU tokenization) |
+| **Free tier total** | **~100-150 MB** | |
+| Cabinet orders (政令) | ~100-200 MB | Government orders implementing statutes |
+| Ministerial ordinances (省令) | ~150-250 MB | Ministry-level regulations |
+| PPC guidelines | ~20-50 MB | APPI interpretive guidelines |
+| **Professional tier total** | **~500 MB-800 MB** | |
+
+---
+
+## Language Support
+
+The primary language is **Japanese (ja)**, which is the sole legally binding version. Official English translations are available from the Japanese Law Translation portal (japaneselawtranslation.go.jp), maintained by the Ministry of Justice. These translations are explicitly marked as reference translations and are not legally authoritative.
+
+The search tool supports queries in both Japanese and English, with Japanese queries using ICU-based tokenization for proper morphological analysis.
+
+---
+
 ## Available Tools (13)
 
 ### Core Legal Research Tools (8)
