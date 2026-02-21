@@ -1,58 +1,86 @@
-# Japan Law MCP
+# Japanese Law MCP Server
 
-[![npm version](https://img.shields.io/npm/v/@ansvar/japan-law-mcp)](https://www.npmjs.com/package/@ansvar/japan-law-mcp)
-[![CI](https://github.com/Ansvar-Systems/japan-law-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/Ansvar-Systems/japan-law-mcp/actions/workflows/ci.yml)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ansvar-Systems/japan-law-mcp/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Ansvar-Systems/japan-law-mcp)
+**The e-Gov Laws alternative for the AI age.**
 
-An MCP (Model Context Protocol) server providing full-text search and article-level retrieval of Japanese legislation. Covers the Act on Protection of Personal Information (APPI, 2003, amended 2020/2022), Cybersecurity Basic Act (2014), Telecommunications Business Act, Companies Act (2005), Act on Prohibition of Unauthorized Computer Access, and My Number Act. All data is sourced from the official e-Gov law portal (laws.e-gov.go.jp) maintained by the Digital Agency, with English translations from the Japanese Law Translation portal (japaneselawtranslation.go.jp) maintained by the Ministry of Justice.
+[![npm version](https://badge.fury.io/js/%40ansvar/japan-law-mcp.svg)](https://www.npmjs.com/package/@ansvar/japan-law-mcp)
+[![MCP Registry](https://img.shields.io/badge/MCP-Registry-blue)](https://registry.modelcontextprotocol.io)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub stars](https://img.shields.io/github/stars/Ansvar-Systems/Japan-law-mcp?style=social)](https://github.com/Ansvar-Systems/Japan-law-mcp)
+[![CI](https://github.com/Ansvar-Systems/Japan-law-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/Ansvar-Systems/Japan-law-mcp/actions/workflows/ci.yml)
 
-## Data Sources
+Query **Japanese legislation** -- covering data protection, cybersecurity, corporate law, and more -- directly from Claude, Cursor, or any MCP-compatible client.
 
-| Source | Authority | Method | Update Frequency | License | Coverage |
-|--------|-----------|--------|-----------------|---------|----------|
-| [e-Gov Law Portal](https://laws.e-gov.go.jp) | Digital Agency (Government of Japan) | API | On change | Government Open Data | All Japanese statutes, cabinet orders, ministerial ordinances |
-| [Japanese Law Translation (JLT)](https://www.japaneselawtranslation.go.jp) | Ministry of Justice | HTML Scrape | On change | Government Open Data (Reference) | Official English translations of 800+ laws |
-| [PPC (個人情報保護委員会)](https://www.ppc.go.jp) | Personal Information Protection Commission | HTML Scrape | On change | Government Public Data | APPI guidelines, enforcement actions, EU adequacy docs |
+If you're building legal tech, compliance tools, or doing Japanese legal research, this is your verified reference database.
 
-> Full provenance metadata: [`sources.yml`](./sources.yml)
+Built by [Ansvar Systems](https://ansvar.eu) -- Stockholm, Sweden
 
-## Laws Covered
+---
 
-| Law | Japanese Name | Act Number | Key Topic |
-|-----|--------------|------------|-----------|
-| **Act on Protection of Personal Information (APPI)** | 個人情報の保護に関する法律 | Act No. 57 of 2003 (amended 2020) | Personal data protection (EU adequacy) |
-| **Cybersecurity Basic Act** | サイバーセキュリティ基本法 | Act No. 104 of 2014 | National cybersecurity framework |
-| **Telecommunications Business Act** | 電気通信事業法 | Act No. 86 of 1984 | Telecom regulation, communications secrecy |
-| **Companies Act** | 会社法 | Act No. 86 of 2005 | Corporate governance, shareholder rights |
-| **Act on Prohibition of Unauthorized Computer Access** | 不正アクセス行為の禁止等に関する法律 | Act No. 128 of 1999 | Anti-hacking, unauthorized access |
-| **My Number Act** | 行政手続における特定の個人を識別するための番号の利用等に関する法律 | Act No. 27 of 2013 | National ID number system |
-| **Constitution (selected provisions)** | 日本国憲法 | 1946 | Fundamental rights, Article 13 (privacy basis) |
+## Why This Exists
 
-Additionally includes key PPC guidelines and supplementary materials:
+Japanese legal research is scattered across official government databases, commercial legal platforms, and institutional archives. Whether you're:
+- A **lawyer** validating citations in a brief or contract
+- A **compliance officer** checking if a statute is still in force
+- A **legal tech developer** building tools on Japanese law
+- A **researcher** tracing legislative history
 
-- APPI Guidelines (General Rules, Cross-Border Transfer, etc.)
-- PPC Q&A on APPI interpretation
-- EU-Japan Adequacy Decision supplementary rules
+...you shouldn't need dozens of browser tabs and manual PDF cross-referencing. Ask Claude. Get the exact provision. With context.
+
+This MCP server makes Japanese law **searchable, cross-referenceable, and AI-readable**.
+
+---
 
 ## Quick Start
 
-### npx (no install)
+### Use Remotely (No Install Needed)
+
+> Connect directly to the hosted version -- zero dependencies, nothing to install.
+
+**Endpoint:** `https://japan-law-mcp.vercel.app/mcp`
+
+| Client | How to Connect |
+|--------|---------------|
+| **Claude.ai** | Settings > Connectors > Add Integration > paste URL |
+| **Claude Code** | `claude mcp add japan-law --transport http https://japan-law-mcp.vercel.app/mcp` |
+| **Claude Desktop** | Add to config (see below) |
+| **GitHub Copilot** | Add to VS Code settings (see below) |
+
+**Claude Desktop** -- add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "japan-law": {
+      "type": "url",
+      "url": "https://japan-law-mcp.vercel.app/mcp"
+    }
+  }
+}
+```
+
+**GitHub Copilot** -- add to VS Code `settings.json`:
+
+```json
+{
+  "github.copilot.chat.mcp.servers": {
+    "japan-law": {
+      "type": "http",
+      "url": "https://japan-law-mcp.vercel.app/mcp"
+    }
+  }
+}
+```
+
+### Use Locally (npm)
 
 ```bash
 npx @ansvar/japan-law-mcp
 ```
 
-### npm install
+**Claude Desktop** -- add to `claude_desktop_config.json`:
 
-```bash
-npm install -g @ansvar/japan-law-mcp
-japan-law-mcp
-```
-
-### Claude Desktop Configuration
-
-Add to `~/.config/claude/claude_desktop_config.json`:
+**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -65,13 +93,11 @@ Add to `~/.config/claude/claude_desktop_config.json`:
 }
 ```
 
-### Cursor Configuration
-
-Add to `.cursor/mcp.json`:
+**Cursor / VS Code:**
 
 ```json
 {
-  "mcpServers": {
+  "mcp.servers": {
     "japan-law": {
       "command": "npx",
       "args": ["-y", "@ansvar/japan-law-mcp"]
@@ -80,74 +106,232 @@ Add to `.cursor/mcp.json`:
 }
 ```
 
-## Available Tools
+---
+
+## Example Queries
+
+Once connected, just ask naturally:
+
+- *"What does the Japanese data protection law say about consent?"*
+- *"Search for cybersecurity requirements in Japanese legislation"*
+- *"Is this statute still in force?"*
+- *"Find provisions about personal data in Japanese law"*
+- *"What EU directives does this Japanese law implement?"*
+- *"Which Japanese laws implement the GDPR?"*
+- *"Validate this legal citation"*
+- *"Build a legal stance on data breach notification requirements"*
+
+---
+
+## Available Tools (13)
+
+### Core Legal Research Tools (8)
 
 | Tool | Description |
 |------|-------------|
-| `search_legislation` | Full-text search across all Japanese laws. Supports Japanese and English queries. Returns matching provisions with law name, article number, and relevance score. |
-| `get_provision` | Retrieve a specific article/provision by law identifier and article number. Returns full text (Japanese + English where available), citation URL, and metadata. |
-| `get_provision_eu_basis` | Cross-reference lookup showing the relationship between Japanese laws and their EU equivalents (e.g., APPI vs GDPR with adequacy context). |
-| `validate_citation` | Validate a legal citation against the database. Checks law name, article number, and returns canonical citation format. |
-| `check_statute_currency` | Check whether a law or provision is the current version. Returns adoption date, effective date, and amendment history. |
-| `list_laws` | List all laws in the database with metadata: official name (Japanese + English), act number, effective date, status, and article count. |
+| `search_legislation` | FTS5 full-text search across all provisions with BM25 ranking |
+| `get_provision` | Retrieve specific provision by statute + chapter/section |
+| `check_currency` | Check if statute is in force, amended, or repealed |
+| `validate_citation` | Validate citation against database (zero-hallucination check) |
+| `build_legal_stance` | Aggregate citations from statutes for a legal topic |
+| `format_citation` | Format citations per Japanese conventions (full/short/pinpoint) |
+| `list_sources` | List all available statutes with metadata |
+| `about` | Server info, capabilities, and coverage summary |
 
-## Deployment Tiers
+### EU/International Law Integration Tools (5)
 
-| Tier | Content | Database Size | Platform |
-|------|---------|---------------|----------|
-| **Free** | All major statutes + English translations + EU cross-references | ~100-150 MB | Vercel (bundled) or local |
-| **Professional** | + Cabinet orders + ministerial ordinances + PPC guidelines + full regulatory corpus | ~500 MB-800 MB | Azure Container Apps / Docker / local |
+| Tool | Description |
+|------|-------------|
+| `get_eu_basis` | Get EU directives/regulations for Japanese statute |
+| `get_japan_law_implementations` | Find Japanese laws implementing EU act |
+| `search_eu_implementations` | Search EU documents with Japanese implementation counts |
+| `get_provision_eu_basis` | Get EU law references for specific provision |
+| `validate_eu_compliance` | Check implementation status of EU directives |
 
-### Deployment Strategy: MEDIUM - Dual Tier, Bundled Free
+---
 
-The free-tier database containing major statutes and English translations is estimated at 100-150 MB, within the Vercel 250 MB bundle limit. The free-tier database is bundled directly with the Vercel deployment. The professional tier with full cabinet orders, ministerial ordinances, and PPC guidelines requires local Docker or Azure Container Apps deployment.
+## Why This Works
 
-### Capability Detection
+**Verbatim Source Text (No LLM Processing):**
+- All statute text is ingested from official Japanese government sources
+- Provisions are returned **unchanged** from SQLite FTS5 database rows
+- Zero LLM summarization or paraphrasing -- the database contains regulation text, not AI interpretations
 
-Both tiers use the same codebase. At startup, the server detects available SQLite tables and gates tools accordingly:
+**Smart Context Management:**
+- Search returns ranked provisions with BM25 scoring (safe for context)
+- Provision retrieval gives exact text by statute identifier + chapter/section
+- Cross-references help navigate without loading everything at once
 
+**Technical Architecture:**
 ```
-Free tier:     core_legislation, eu_references, english_translations
-Professional:  core_legislation, eu_references, english_translations, cabinet_orders, ministerial_ordinances, ppc_guidelines
+Official Sources --> Parse --> SQLite --> FTS5 snippet() --> MCP response
+                     ^                       ^
+              Provision parser         Verbatim database query
 ```
 
-Tools that require professional capabilities return an upgrade message on the free tier.
+### Traditional Research vs. This MCP
 
-## Database Size Estimates
+| Traditional Approach | This MCP Server |
+|---------------------|-----------------|
+| Search official databases by statute number | Search by plain language |
+| Navigate multi-chapter statutes manually | Get the exact provision with context |
+| Manual cross-referencing between laws | `build_legal_stance` aggregates across sources |
+| "Is this statute still in force?" --> check manually | `check_currency` tool --> answer in seconds |
+| Find EU basis --> dig through EUR-Lex | `get_eu_basis` --> linked EU directives instantly |
+| No API, no integration | MCP protocol --> AI-native |
 
-| Component | Estimated Size | Notes |
-|-----------|---------------|-------|
-| Major statutes (laws / 法律) | ~40-50 MB | ~200 key statutes, full Japanese text |
-| English translations (JLT) | ~30-40 MB | Official MOJ translations of major laws |
-| EU cross-references | ~5-10 MB | APPI-GDPR adequacy mapping tables |
-| FTS5 indexes | ~30-50 MB | Full-text search indexes for Japanese text (ICU tokenization) |
-| **Free tier total** | **~100-150 MB** | |
-| Cabinet orders (政令) | ~100-200 MB | Government orders implementing statutes |
-| Ministerial ordinances (省令) | ~150-250 MB | Ministry-level regulations |
-| PPC guidelines | ~20-50 MB | APPI interpretive guidelines |
-| **Professional tier total** | **~500 MB-800 MB** | |
+---
 
-## Data Freshness
+## Data Sources & Freshness
 
-- **SLO:** 30 days maximum data age
-- **Automated checks:** Weekly upstream change detection
-- **Drift detection:** Nightly hash verification of 6 stable provisions (Constitution Art. 13, APPI Art. 1, Cybersecurity Basic Act Art. 1, Companies Act Art. 1, Telecom Business Act Art. 1, Unauthorized Access Act Art. 1)
-- **Health endpoint:** Returns `status: stale` when data exceeds 30-day SLO
+All content is sourced from authoritative Japanese legal databases:
 
-## Language Support
+- **[e-Gov Laws](https://elaws.e-gov.go.jp)** -- Official Japanese government legal database
 
-The primary language is **Japanese (ja)**, which is the sole legally binding version. Official English translations are available from the Japanese Law Translation portal (japaneselawtranslation.go.jp), maintained by the Ministry of Justice. These translations are explicitly marked as reference translations and are not legally authoritative.
+**Verified data only** -- every citation is validated against official sources. Zero LLM-generated content.
 
-The search tool supports queries in both Japanese and English, with Japanese queries using ICU-based tokenization for proper morphological analysis.
+---
+
+## Security
+
+This project uses multiple layers of automated security scanning:
+
+| Scanner | What It Does | Schedule |
+|---------|-------------|----------|
+| **CodeQL** | Static analysis for security vulnerabilities | Weekly + PRs |
+| **Semgrep** | SAST scanning (OWASP top 10, secrets, TypeScript) | Every push |
+| **Gitleaks** | Secret detection across git history | Every push |
+| **Trivy** | CVE scanning on filesystem and npm dependencies | Daily |
+| **Socket.dev** | Supply chain attack detection | PRs |
+| **Dependabot** | Automated dependency updates | Weekly |
+
+See [SECURITY.md](SECURITY.md) for the full policy and vulnerability reporting.
+
+---
+
+## Important Disclaimers
+
+### Legal Advice
+
+> **THIS TOOL IS NOT LEGAL ADVICE**
+>
+> Statute text is sourced from official Japanese government publications. However:
+> - This is a **research tool**, not a substitute for professional legal counsel
+> - **Court case coverage is limited** -- do not rely solely on this for case law research
+> - **Verify critical citations** against primary sources for court filings
+> - **EU cross-references** are extracted from statute text, not EUR-Lex full text
+
+**Before using professionally, read:** [DISCLAIMER.md](DISCLAIMER.md) | [SECURITY.md](SECURITY.md)
+
+### Client Confidentiality
+
+Queries go through the Claude API. For privileged or confidential matters, use on-premise deployment.
+
+---
+
+## Development
+
+### Setup
+
+```bash
+git clone https://github.com/Ansvar-Systems/Japan-law-mcp
+cd Japan-law-mcp
+npm install
+npm run build
+npm test
+```
+
+### Running Locally
+
+```bash
+npm run dev                                       # Start MCP server
+npx @anthropic/mcp-inspector node dist/index.js   # Test with MCP Inspector
+```
+
+---
+
+## Related Projects: Complete Compliance Suite
+
+This server is part of **Ansvar's Compliance Suite** -- MCP servers that work together for end-to-end compliance coverage:
+
+### [@ansvar/eu-regulations-mcp](https://github.com/Ansvar-Systems/EU_compliance_MCP)
+**Query 49 EU regulations directly from Claude** -- GDPR, AI Act, DORA, NIS2, MiFID II, eIDAS, and more. Full regulatory text with article-level search. `npx @ansvar/eu-regulations-mcp`
+
+### [@ansvar/us-regulations-mcp](https://github.com/Ansvar-Systems/US_Compliance_MCP)
+**Query US federal and state compliance laws** -- HIPAA, CCPA, SOX, GLBA, FERPA, and more. `npx @ansvar/us-regulations-mcp`
+
+### [@ansvar/security-controls-mcp](https://github.com/Ansvar-Systems/security-controls-mcp)
+**Query 261 security frameworks** -- ISO 27001, NIST CSF, SOC 2, CIS Controls, SCF, and more. `npx @ansvar/security-controls-mcp`
+
+### [@ansvar/automotive-cybersecurity-mcp](https://github.com/Ansvar-Systems/Automotive-MCP)
+**Query UNECE R155/R156 and ISO 21434** -- Automotive cybersecurity compliance. `npx @ansvar/automotive-cybersecurity-mcp`
+
+**30+ national law MCPs** covering Australia, Brazil, Canada, China, Denmark, Finland, France, Germany, Ghana, Iceland, India, Ireland, Israel, Italy, Japan, Kenya, Netherlands, Nigeria, Norway, Singapore, Slovenia, South Korea, Sweden, Switzerland, Thailand, UAE, UK, and more.
+
+---
 
 ## Contributing
 
-Contributions are welcome. Please read [SECURITY.md](./SECURITY.md) before submitting issues or pull requests.
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-For data accuracy issues (wrong text, missing articles, stale provisions), use the [data error report template](https://github.com/Ansvar-Systems/japan-law-mcp/issues/new?template=data-error.md).
+Priority areas:
+- Court case law expansion
+- EU cross-reference improvements
+- Historical statute versions and amendment tracking
+- Additional statutory instruments and regulations
+
+---
+
+## Roadmap
+
+- [x] Core statute database with FTS5 search
+- [x] EU/international law cross-references
+- [x] Vercel Streamable HTTP deployment
+- [x] npm package publication
+- [ ] Court case law expansion
+- [ ] Historical statute versions (amendment tracking)
+- [ ] Preparatory works / explanatory memoranda
+- [ ] Lower court and tribunal decisions
+
+---
+
+## Citation
+
+If you use this MCP server in academic research:
+
+```bibtex
+@software{japan_law_mcp_2025,
+  author = {Ansvar Systems AB},
+  title = {Japanese Law MCP Server: AI-Powered Legal Research Tool},
+  year = {2025},
+  url = {https://github.com/Ansvar-Systems/Japan-law-mcp},
+  note = {Japanese legal database with full-text search and EU cross-references}
+}
+```
+
+---
 
 ## License
 
-Apache-2.0
+Apache License 2.0. See [LICENSE](./LICENSE) for details.
 
-The law text itself is public domain under Japanese government open data policy. This project's code and database structure are licensed under Apache-2.0.
+### Data Licenses
+
+- **Statutes & Legislation:** Japanese Government (public domain)
+- **EU Metadata:** EUR-Lex (EU public domain)
+
+---
+
+## About Ansvar Systems
+
+We build AI-accelerated compliance and legal research tools for the global market. This MCP server started as our internal reference tool -- turns out everyone building compliance tools has the same research frustrations.
+
+So we're open-sourcing it.
+
+**[ansvar.eu](https://ansvar.eu)** -- Stockholm, Sweden
+
+---
+
+<p align="center">
+  <sub>Built with care in Stockholm, Sweden</sub>
+</p>
