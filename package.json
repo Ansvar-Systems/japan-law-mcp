@@ -1,7 +1,7 @@
 {
   "name": "@ansvar/japan-law-mcp",
   "mcpName": "eu.ansvar/japan-law-mcp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Japanese law database covering personal information protection (APPI), cybersecurity, telecommunications, corporate law, and unauthorized access legislation with full-text search",
   "type": "module",
   "main": "dist/index.js",
@@ -10,7 +10,8 @@
   },
   "files": [
     "dist",
-    "data/database.db"
+    "data/database.db",
+    "data/census.json"
   ],
   "scripts": {
     "build": "tsc",
