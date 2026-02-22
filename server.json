@@ -1,21 +1,30 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "eu.ansvar/japan-law-mcp",
-  "description": "Japanese law database covering personal information protection (APPI), cybersecurity, telecommunications, corporate law, and unauthorized access legislation with full-text search",
+  "description": "Japan legislation via MCP — full-text search across statutes and provisions",
   "repository": {
     "url": "https://github.com/Ansvar-Systems/japan-law-mcp",
     "source": "github"
   },
   "homepage": "https://ansvar.eu",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "Apache-2.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@ansvar/japan-law-mcp",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "transport": {
         "type": "stdio"
+      }
+    },
+    {
+      "registryType": "npm",
+      "identifier": "@ansvar/japan-law-mcp",
+      "version": "1.1.0",
+      "transport": {
+        "type": "streamable-http",
+        "url": "https://japan-law-mcp.vercel.app/mcp"
       }
     }
   ]

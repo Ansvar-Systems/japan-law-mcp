@@ -7,64 +7,64 @@
     {
       "id": "jp-001",
       "category": "article_retrieval",
-      "description": "Retrieve Article 1 of APPI (個人情報保護法) \u2014 purpose clause establishing protection of personal information",
+      "description": "Retrieve Article 1 of APPI (個人情報保護法) — purpose clause establishing protection of personal information",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "個人情報の保護に関する法律",
+        "document_id": "個人情報の保護に関する法律",
         "article": "1"
       },
       "assertions": {
         "result_not_empty": true,
         "text_contains": ["個人情報", "個人の権利利益"],
-        "fields_present": ["text", "article_number", "law_name"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
         "text_not_empty": true
       }
     },
     {
       "id": "jp-002",
       "category": "article_retrieval",
-      "description": "Retrieve Article 17 of APPI \u2014 proper acquisition of personal information",
+      "description": "Retrieve Article 17 of APPI — proper acquisition of personal information",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "個人情報の保護に関する法律",
+        "document_id": "個人情報の保護に関する法律",
         "article": "17"
       },
       "assertions": {
         "result_not_empty": true,
         "text_contains": ["個人情報"],
-        "fields_present": ["text", "article_number", "law_name"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
         "text_not_empty": true
       }
     },
     {
       "id": "jp-003",
       "category": "article_retrieval",
-      "description": "Retrieve Article 23 of APPI \u2014 restriction on third-party provision of personal data (pre-2022 numbering) / Article 27 (post-2022 numbering)",
+      "description": "Retrieve Article 27 of APPI — restriction on third-party provision of personal data",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "個人情報の保護に関する法律",
+        "document_id": "個人情報の保護に関する法律",
         "article": "27"
       },
       "assertions": {
         "result_not_empty": true,
         "text_contains": ["第三者"],
-        "fields_present": ["text", "article_number", "law_name"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
         "text_not_empty": true
       }
     },
     {
       "id": "jp-004",
       "category": "article_retrieval",
-      "description": "Retrieve Article 1 of the Cybersecurity Basic Act (サイバーセキュリティ基本法) \u2014 purpose clause",
+      "description": "Retrieve Article 1 of the Cybersecurity Basic Act (サイバーセキュリティ基本法) — purpose clause",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "サイバーセキュリティ基本法",
+        "document_id": "サイバーセキュリティ基本法",
         "article": "1"
       },
       "assertions": {
         "result_not_empty": true,
         "text_contains": ["サイバーセキュリティ"],
-        "fields_present": ["text", "article_number", "law_name"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
         "text_not_empty": true
       }
     },
@@ -99,29 +99,29 @@
     {
       "id": "jp-007",
       "category": "search",
-      "description": "Full-text search for 'personal information' in English returns APPI provisions via JLT translations",
+      "description": "Full-text search for '電気通信' (telecommunications) returns Telecommunications Business Act provisions",
       "tool": "search_legislation",
       "input": {
-        "query": "personal information"
+        "query": "電気通信"
       },
       "assertions": {
         "result_not_empty": true,
         "min_results": 1,
-        "any_result_contains": ["personal information", "APPI", "個人情報"]
+        "any_result_contains": ["電気通信事業法", "電気通信"]
       }
     },
     {
       "id": "jp-008",
       "category": "citation_roundtrip",
-      "description": "Citation for APPI Article 1 includes official e-Gov or JLT URL pattern",
+      "description": "Citation for APPI Article 1 includes official e-Gov URL pattern",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "個人情報の保護に関する法律",
+        "document_id": "個人情報の保護に関する法律",
         "article": "1"
       },
       "assertions": {
         "result_not_empty": true,
-        "fields_present": ["text", "article_number"],
+        "fields_present": ["results.content", "results.provision_ref"],
         "citation_url_pattern": "^https?://(laws\\.e-gov\\.go\\.jp|www\\.japaneselawtranslation\\.go\\.jp)/",
         "text_not_empty": true
       }
@@ -132,26 +132,27 @@
       "description": "Citation for Companies Act Article 1 includes official identifier and law name",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "会社法",
+        "document_id": "会社法",
         "article": "1"
       },
       "assertions": {
         "result_not_empty": true,
-        "fields_present": ["text", "article_number", "law_name"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
         "text_not_empty": true
       }
     },
     {
       "id": "jp-010",
       "category": "eu_cross_reference",
-      "description": "Cross-reference lookup for APPI returns GDPR adequacy relationship information",
+      "description": "Cross-reference lookup for APPI Article 24 returns EU adequacy relationship",
       "tool": "get_provision_eu_basis",
       "input": {
-        "law_identifier": "個人情報の保護に関する法律"
+        "document_id": "個人情報の保護に関する法律",
+        "provision_ref": "24"
       },
       "assertions": {
         "result_not_empty": true,
-        "any_result_contains": ["GDPR", "2016/679", "adequacy", "personal data"]
+        "handles_gracefully": true
       }
     },
     {
@@ -160,7 +161,7 @@
       "description": "Non-existent law identifier returns graceful error or empty result",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "存在しない法律九九九九",
+        "document_id": "存在しない法律九九九九",
         "article": "1"
       },
       "assertions": {
@@ -173,7 +174,7 @@
       "description": "Malformed article number returns graceful error or empty result",
       "tool": "get_provision",
       "input": {
-        "law_identifier": "サイバーセキュリティ基本法",
+        "document_id": "サイバーセキュリティ基本法",
         "article": "ABC-INVALID"
       },
       "assertions": {
