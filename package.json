@@ -1,7 +1,7 @@
 {
   "name": "@ansvar/japan-law-mcp",
   "mcpName": "eu.ansvar/japan-law-mcp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Japanese law database covering personal information protection (APPI), cybersecurity, telecommunications, corporate law, and unauthorized access legislation with full-text search",
   "type": "module",
   "main": "dist/index.js",
@@ -29,7 +29,8 @@
     "validate": "npm test && npm run test:contract",
     "prepublishOnly": "npm run build",
     "postinstall": "test -d dist || npm run build || true",
-    "health": "curl -s http://localhost:3000/health | jq ."
+    "health": "curl -s http://localhost:3000/health | jq .",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@ansvar/mcp-sqlite": "^1.0.3",
