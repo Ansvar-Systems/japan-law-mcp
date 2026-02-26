@@ -3,6 +3,8 @@ dist/
 *.db
 !data/database.db
 !data/.gitkeep
+data/seed/
+data/ingest-errors.json
 .env
 .env.*
 *.tgz
