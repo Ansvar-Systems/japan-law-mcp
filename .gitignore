@@ -11,3 +11,5 @@ data/ingest-errors.json
 coverage/
 .vercel/
 .DS_Store
+.claude/
+.serena/
