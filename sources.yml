@@ -11,7 +11,7 @@ sources:
     retrieval_method: "API"
     api_documentation: "https://laws.e-gov.go.jp/apitop/"
     update_frequency: "on_change"
-    last_ingested: "2026-02-26"
+    last_ingested: "PENDING_FIRST_INGEST"
     license_or_terms:
       type: "Government Open Data (Japan Open Data)"
       url: "https://www.digital.go.jp/policies/open_data"
@@ -63,7 +63,7 @@ sources:
 data_freshness:
   automated_checks: true
   check_frequency: "weekly"
-  last_verified: "2026-02-26"
+  last_verified: "PENDING_FIRST_INGEST"
 
 # Notes:
 # - e-Gov (laws.e-gov.go.jp) provides a public API for accessing Japanese legislation

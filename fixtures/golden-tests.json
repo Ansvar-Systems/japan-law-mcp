@@ -2,123 +2,143 @@
   "$schema": "./golden-tests.schema.json",
   "version": "1.0",
   "mcp_name": "Japan Law MCP",
-  "description": "Golden contract tests for the Japan Law MCP. Note: article retrieval and search tests use handles_gracefully because the DB corpus is pending full ingestion.",
+  "description": "Golden contract tests for the Japan Law MCP covering personal information protection, cybersecurity, telecommunications, corporate law, and unauthorized access legislation",
   "tests": [
     {
       "id": "jp-001",
       "category": "article_retrieval",
-      "description": "Retrieve Article 1 of APPI (個人情報保護法) — returns gracefully when corpus not yet ingested",
+      "description": "Retrieve Article 1 of APPI (個人情報保護法) — purpose clause establishing protection of personal information",
       "tool": "get_provision",
       "input": {
         "document_id": "個人情報の保護に関する法律",
         "article": "1"
       },
       "assertions": {
-        "handles_gracefully": true
+        "result_not_empty": true,
+        "text_contains": ["個人情報", "個人の権利利益"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
+        "text_not_empty": true
       }
     },
     {
       "id": "jp-002",
       "category": "article_retrieval",
-      "description": "Retrieve Article 17 of APPI — returns gracefully when corpus not yet ingested",
+      "description": "Retrieve Article 17 of APPI — proper acquisition of personal information",
       "tool": "get_provision",
       "input": {
         "document_id": "個人情報の保護に関する法律",
         "article": "17"
       },
       "assertions": {
-        "handles_gracefully": true
+        "result_not_empty": true,
+        "text_contains": ["個人情報"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
+        "text_not_empty": true
       }
     },
     {
       "id": "jp-003",
       "category": "article_retrieval",
-      "description": "Retrieve Article 27 of APPI — returns gracefully when corpus not yet ingested",
+      "description": "Retrieve Article 27 of APPI — restriction on third-party provision of personal data",
       "tool": "get_provision",
       "input": {
         "document_id": "個人情報の保護に関する法律",
         "article": "27"
       },
       "assertions": {
-        "handles_gracefully": true
+        "result_not_empty": true,
+        "text_contains": ["第三者"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
+        "text_not_empty": true
       }
     },
     {
       "id": "jp-004",
       "category": "article_retrieval",
-      "description": "Retrieve Article 1 of the Cybersecurity Basic Act (サイバーセキュリティ基本法) — returns gracefully when corpus not yet ingested",
+      "description": "Retrieve Article 1 of the Cybersecurity Basic Act (サイバーセキュリティ基本法) — purpose clause",
       "tool": "get_provision",
       "input": {
         "document_id": "サイバーセキュリティ基本法",
         "article": "1"
       },
       "assertions": {
-        "handles_gracefully": true
+        "result_not_empty": true,
+        "text_contains": ["サイバーセキュリティ"],
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
+        "text_not_empty": true
       }
     },
     {
       "id": "jp-005",
       "category": "search",
-      "description": "Full-text search for '個人情報' (personal information) — returns gracefully when corpus not yet ingested",
+      "description": "Full-text search for '個人情報' (personal information) returns APPI-related provisions",
       "tool": "search_legislation",
       "input": {
         "query": "個人情報"
       },
       "assertions": {
         "result_not_empty": true,
-        "handles_gracefully": true
+        "min_results": 1,
+        "any_result_contains": ["個人情報の保護に関する法律", "個人情報"]
       }
     },
     {
       "id": "jp-006",
       "category": "search",
-      "description": "Full-text search for 'サイバーセキュリティ' (cybersecurity) — returns gracefully when corpus not yet ingested",
+      "description": "Full-text search for 'サイバーセキュリティ' (cybersecurity) returns Cybersecurity Basic Act provisions",
       "tool": "search_legislation",
       "input": {
         "query": "サイバーセキュリティ"
       },
       "assertions": {
         "result_not_empty": true,
-        "handles_gracefully": true
+        "min_results": 1,
+        "any_result_contains": ["サイバーセキュリティ基本法", "サイバーセキュリティ"]
       }
     },
     {
       "id": "jp-007",
       "category": "search",
-      "description": "Full-text search for '電気通信' (telecommunications) — returns gracefully when corpus not yet ingested",
+      "description": "Full-text search for '電気通信' (telecommunications) returns Telecommunications Business Act provisions",
       "tool": "search_legislation",
       "input": {
         "query": "電気通信"
       },
       "assertions": {
         "result_not_empty": true,
-        "handles_gracefully": true
+        "min_results": 1,
+        "any_result_contains": ["電気通信事業法", "電気通信"]
       }
     },
     {
       "id": "jp-008",
       "category": "citation_roundtrip",
-      "description": "Citation for APPI Article 1 — returns gracefully when corpus not yet ingested",
+      "description": "Citation for APPI Article 1 includes official e-Gov URL pattern",
       "tool": "get_provision",
       "input": {
         "document_id": "個人情報の保護に関する法律",
         "article": "1"
       },
       "assertions": {
-        "handles_gracefully": true
+        "result_not_empty": true,
+        "fields_present": ["results.content", "results.provision_ref"],
+        "citation_url_pattern": "^https?://(laws\\.e-gov\\.go\\.jp|www\\.japaneselawtranslation\\.go\\.jp)/",
+        "text_not_empty": true
       }
     },
     {
       "id": "jp-009",
       "category": "citation_roundtrip",
-      "description": "Citation for Companies Act Article 1 — returns gracefully when corpus not yet ingested",
+      "description": "Citation for Companies Act Article 1 includes official identifier and law name",
       "tool": "get_provision",
       "input": {
         "document_id": "会社法",
         "article": "1"
       },
       "assertions": {
-        "handles_gracefully": true
+        "result_not_empty": true,
+        "fields_present": ["results.content", "results.provision_ref", "results.document_title"],
+        "text_not_empty": true
       }
     },
     {
